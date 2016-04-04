@@ -33,6 +33,19 @@
 
     data = data.splice(1,6);
 
+    svg.selectAll("rect").data(data).enter()
+      .append("rect")
+      .attr("height", function(d){ return d.values.length * 20})
+      .attr("width", 50)
+      .attr("x", function(d, i){ return i*100 })
+      .attr("fill", "green")
+
+    svg.selectAll("text").data(data).enter()
+      .append("text")
+      .attr("x", function(d, i){ return i*100 })
+      .attr("y", function(d, i){ return 50})
+      .text(function(d){ return d.key; })
+
       // debugger
 
     // x.domain(data.map(function(d) {

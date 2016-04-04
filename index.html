@@ -18,7 +18,7 @@
 
 
   var svg = d3.select("body").append("svg")
-      .attr("width", 500)
+      .attr("width", 600)
       .attr("height", 200)
     .append("g")
       // .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
@@ -33,30 +33,21 @@
 
     data = data.splice(1,6);
 
-    svg.selectAll("rect").data(data).enter()
-      .append("rect")
-      .attr("height", function(d){ return d.values.length * 20})
-      .attr("width", 50)
-      .attr("x", function(d, i){ return i*100 })
-      .attr("fill", "green")
+    var rects = svg.selectAll("rect").data(data).enter()
+      .append("g").attr("class", "bar")
+      .attr("width", "100")
+      .attr("transform", function(d, i){ return "translate("+ i*100 + ",50)"})
 
-    svg.selectAll("text").data(data).enter()
-      .append("text")
-      .attr("x", function(d, i){ return i*100 })
-      .attr("y", function(d, i){ return 50})
-      .text(function(d){ return d.key; })
+      rects.append("rect")
+        .attr("height", function(d){
+          console.log(d.key, d.values.length);
+          return d.values.length * 20})
+        .attr("width", 50)
+        .attr("fill", "green")
+      rects.append("text")
+        .text(function(d) {return d.key })
+        .attr("transform", "rotate(90)")
 
-      // debugger
-
-    // x.domain(data.map(function(d) {
-    //   console.log(d.key, d.values.length);
-    //   return d.key; }));
-    // y.domain([0, d3.max(data, function(d) { return d.values.length*100; })]);
-    //
-    // svg.append("g")
-    //     .attr("class", "x axis")
-    //     .attr("transform", "translate(0," + height + ")")
-    //     .call(xAxis);
       });
 
   </script>

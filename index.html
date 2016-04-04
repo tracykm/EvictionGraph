@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>Eviction Graph</title>
+    <script src="https://d3js.org/d3.v3.min.js" charset="utf-8"></script>
+    <link rel="stylesheet" href="css/master.css" media="screen" title="no title" charset="utf-8">
+  </head>
+  <body>
+
+    <div id="content">
+      <h1>Eviction Notices</h1>
+      lala
+    </div>
+
+  </body>
+  <script type="text/javascript">
+
+
+  var svg = d3.select("body").append("svg")
+      .attr("width", 500)
+      .attr("height", 200)
+    .append("g")
+      // .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
+
+  d3.csv("./test.csv", function(error, data) {
+    if (error) throw error;
+
+    var data=d3.nest()
+      .key(function(d) {return d.Neighborhood;})
+      .sortKeys(d3.ascending)
+      .entries(data);
+
+    data = data.splice(1,6);
+
+      // debugger
+
+    // x.domain(data.map(function(d) {
+    //   console.log(d.key, d.values.length);
+    //   return d.key; }));
+    // y.domain([0, d3.max(data, function(d) { return d.values.length*100; })]);
+    //
+    // svg.append("g")
+    //     .attr("class", "x axis")
+    //     .attr("transform", "translate(0," + height + ")")
+    //     .call(xAxis);
+      });
+
+  </script>
+</html>

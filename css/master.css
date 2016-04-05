@@ -1,8 +1,10 @@
 body{
   font-family: "Avenir Next";
+  background: #EEE;
 }
 
 #content{
   margin: 50px;
-  background: #EEE;
+  background: white;
+  padding: 20px;
 }

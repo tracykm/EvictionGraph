@@ -31,34 +31,54 @@
       .entries(data);
 
       // debugger
-
+      var tooltip = d3.select("body")
+          .append("div")
+          .style("position", "absolute")
+          .style("z-index", "10")
+          .style("text-align", "center")
+          .style("visibility", "hidden")
+          .text("a simple tooltip");
     // data = data.splice(1,6);
 
     var chart = svg.selectAll("rect")
       .data(data).enter()
       .append("g")
       .attr("class", "bar")
-      .attr("width", "100")
-      .attr("transform", function(d, i){ return "translate("+ i*50 + ",50)"})
+      // .attr("width", "150")
+      .attr("transform", function(d, i){ return "translate("+ i*50 + ",10)"})
+      .on("mouseover", function(d, i){
+        var barHeight = +this.children[0].attributes.height.value;
+        // var barX = this.attributes.transform.value.split(/\D/);  //not working yet
+        // debugger
+        console.log(barHeight);
+        tooltip.text(d.values.length + " evictions");
+        tooltip.style("visibility", "visible")
+        .style("top",(170+barHeight)+"px")
+        .style("left",(170+barHeight)+"px")
+        console.log(tooltip.style("top"), (barHeight)+"px");
+      ;})
+
+      .on("mousemove", function(){return tooltip.style("left",(d3.event.pageX+10)+"px");})
+      .on("mouseout", function(){return tooltip.style("visibility", "hidden");});
 
       var rects = chart.append("rect")
-        .attr("height", function(d){
-          console.log(d.key, d.values.length);
-          return d.values.length / 20})
-        .attr("width", 20)
-        .attr("fill", "green")
-        .attr("opacity", 0)
+        .attr("height", 0)
+        .attr("width", 30)
+        .attr("fill", function(d,i){ return "rgb("+(255-(i*10))+",200,"+i*20+")"})
 
       chart.append("text")
         .text(function(d) {return d.key })
         .attr("transform", "rotate(90)")
         .attr("fill", "white")
+        .attr("y",-10)
+        .attr("x",10)
 
         rects.transition()
-          .attr("opacity",1)
+          .attr("height", function(d){ return d.values.length / 20})
           .duration(2000)
           .delay(function(d,i){ return i*100})
           .ease("elastic")
+
       });
 
   </script>

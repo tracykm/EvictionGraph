@@ -34,24 +34,31 @@
 
     // data = data.splice(1,6);
 
-    var rects = svg.selectAll("rect")
+    var chart = svg.selectAll("rect")
       .data(data).enter()
       .append("g")
       .attr("class", "bar")
       .attr("width", "100")
       .attr("transform", function(d, i){ return "translate("+ i*50 + ",50)"})
 
-      rects.append("rect")
+      var rects = chart.append("rect")
         .attr("height", function(d){
           console.log(d.key, d.values.length);
           return d.values.length / 20})
         .attr("width", 20)
         .attr("fill", "green")
-      rects.append("text")
+        .attr("opacity", 0)
+
+      chart.append("text")
         .text(function(d) {return d.key })
         .attr("transform", "rotate(90)")
         .attr("fill", "white")
 
+        rects.transition()
+          .attr("opacity",1)
+          .duration(2000)
+          .delay(function(d,i){ return i*100})
+          .ease("elastic")
       });
 
   </script>
